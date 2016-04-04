@@ -128,8 +128,6 @@ function setup_gnuplot(gnuplot, options) {
  */
 function post_gnuplot_processing(error, stdout, stderr) {
   /* Print stuff */
-  console.log('stdout: ' + stdout);
-  console.log('stderr: ' + stderr);
   if (error !== null) {
     console.log('exec error: ' + error);
   }
@@ -143,8 +141,8 @@ function post_gnuplot_processing(error, stdout, stderr) {
  */
 function plot(options) {
   /* Required Options */
-  if (!options.data || !options.filename) {
-    throw("The options object must have 'data' and 'filename' properties!");
+  if (!options.data) {
+    throw("The options object must have 'data' property!");
     return;
   }
   /* Translate data into an object if needs be */
@@ -172,12 +170,28 @@ function plot(options) {
   if (options.format === 'pdf') { /* Special setup for pdf */
     gnuplot = exec('gnuplot | ps2pdf - ' + options.filename,
 		   (options.exec ? options.exec : {}),
-		   options.finish || post_gnuplot_processing);
+		   function (error, stdout, stderr) {
+        if (options.finish) {
+          options.finish.apply(this, [error, stdout, stderr]);
+        } else {
+          post_gnuplot_processing(error, stdout, stderr);
+        }
+       });
 
-  } else { /* Default for everything else */
+  } else if (options.filename) { /* Default for everything else */
     gnuplot = exec('gnuplot > ' + options.filename,
 		   (options.exec ? options.exec : {}),
 		   options.finish || post_gnuplot_processing);
+  } else { /* Default for everything else */
+    gnuplot = exec('gnuplot ',
+       (options.exec ? options.exec : {}),
+       function (error, stdout, stderr) {
+        if (options.finish) {
+          options.finish.apply(this, [error, stdout, stderr]);
+        } else {
+          post_gnuplot_processing(error, stdout, stderr);
+        }
+       });
   }
 
   /* Sets up gnuplot based on the properties we've been given in the
