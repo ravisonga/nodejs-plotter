@@ -86,7 +86,7 @@ function time_format(options) {
  */
 function setup_gnuplot(gnuplot, options) {
   if (options.format === 'svg') { /* Setup gnuplot for SVG */
-    gnuplot.stdin.write('set term svg fname \"Helvetica\" fsize 14\n');
+    gnuplot.stdin.write('set term svg fname \"Verdana\" fsize 11\n');
   } else if (options.format == 'pdf') {
     /* PDF: setup Gnuplot output to postscript so ps2pdf can interpret it */
     gnuplot.stdin.write('set term postscript landscape enhanced color dashed' +
