@@ -1,5 +1,5 @@
 {
-  "name": "@usubram/plotter",
+  "name": "@umashankar/plotter",
   "version": "0.5.1",
   "description": "Turns an array of data into a graph in a pdf document.",
   "main": "plotter.js",
