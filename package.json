@@ -1,22 +1,22 @@
 {
-	"name": "@usubram/plotter",
-	"version": "0.5.0",
-	"description": "Turns an array of data into a graph in a pdf document.",
-	"main": "plotter.js",
-	"author": "Richard Eoin <richardeoin@gmail.com>",
-	"dependencies": {
-		"underscore" : "1.4.x"
-	},
-	"keywords": [
-		"plotting",
-		"graph",
-		"pdf",
-		"gnuplot"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/usubram/nodejs-plotter.git"
-	},
-	"license": "MIT",
-	"engine": "node >= 0.10.25"
+  "name": "@usubram/plotter",
+  "version": "0.5.1",
+  "description": "Turns an array of data into a graph in a pdf document.",
+  "main": "plotter.js",
+  "author": "Richard Eoin <richardeoin@gmail.com>",
+  "dependencies": {
+    "underscore": "1.4.x"
+  },
+  "keywords": [
+    "plotting",
+    "graph",
+    "pdf",
+    "gnuplot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usubram/nodejs-plotter.git"
+  },
+  "license": "MIT",
+  "engine": "node >= 0.10.25"
 }
