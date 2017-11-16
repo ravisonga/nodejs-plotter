@@ -215,8 +215,11 @@ function plot(options) {
   gnuplot.stdin.write('plot');
   for (i = 1; i <= series.length; i += 1) { /* For each series */
     /* Instruct gnuplot to plot this series */
+    var props = options.data[series[i - 1]].props;
+    var color = (props || {}).color ? 'rgb "' + props.color + '"' : i;
+
     gnuplot.stdin.write('\'-\' using 1:2 title\'' + series[i - 1] +
-			'\' with ' + options.style + ' lt 1 lw 1 lc ' + i);
+			'\' with ' + options.style + ' lt 1 lw 1 lc ' + color);
     /* If another series is to follow, add a comma */
     if (i < series.length) { gnuplot.stdin.write(','); }
   }
@@ -224,8 +227,9 @@ function plot(options) {
 
   /* Print out the data */
   for (i = 0; i < series.length; i += 1) { /* For each series */
-    for (key in options.data[series[i]]) {
-      gnuplot.stdin.write(key + ' ' + options.data[series[i]][key] + '\n');
+    var dataSeries = (options.data[series[i]] || {}).series || options.data[series[i]];
+    for (key in dataSeries) {
+      gnuplot.stdin.write(key + ' ' + dataSeries[key] + '\n');
     }
     /* Terminate the data */
     gnuplot.stdin.write('e\n');
