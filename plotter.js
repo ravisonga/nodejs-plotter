@@ -217,9 +217,12 @@ function plot(options) {
     /* Instruct gnuplot to plot this series */
     var props = options.data[series[i - 1]].props;
     var color = (props || {}).color ? 'rgb "' + props.color + '"' : i;
+    var lineType = (props || {}).lineType ? props.lineType : '1';
+    var lineWidth = (props || {}).lineWidth ? props.lineWidth : '1';
+    var lineStyle = (props || {}).lineStyle ? props.lineStyle : options.style;
 
     gnuplot.stdin.write('\'-\' using 1:2 title\'' + series[i - 1] +
-			'\' with ' + options.style + ' lt 1 lw 1 lc ' + color);
+			'\' with ' + lineStyle + ' lt ' + lineType + ' lw ' + lineWidth + ' lc ' + color);
     /* If another series is to follow, add a comma */
     if (i < series.length) { gnuplot.stdin.write(','); }
   }
