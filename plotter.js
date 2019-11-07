@@ -220,8 +220,9 @@ function plot(options) {
     var lineType = (props || {}).lineType ? props.lineType : '1';
     var lineWidth = (props || {}).lineWidth ? props.lineWidth : '1';
     var lineStyle = (props || {}).lineStyle ? props.lineStyle : options.style;
+    var smooth = ((props || {}).smooth ? props.smooth : options.smooth) || 'unique';
 
-    gnuplot.stdin.write('\'-\' using 1:2 title\'' + series[i - 1] +
+    gnuplot.stdin.write('\'-\' using 1:2 smooth ' + smooth + ' title\'' + series[i - 1] +
 			'\' with ' + lineStyle + ' lt ' + lineType + ' lw ' + lineWidth + ' lc ' + color);
     /* If another series is to follow, add a comma */
     if (i < series.length) { gnuplot.stdin.write(','); }
