@@ -85,6 +85,15 @@ function time_format(options) {
  * Sets up gnuplot based on the properties we're given in the options object.
  */
 function setup_gnuplot(gnuplot, options) {
+  var bg = (options.color && options.color.bg) || 'black';
+  var border = (options.color && options.color.border) || 'white';
+  var ytics = (options.color && options.color.ytics) || 'white';
+  var xtics = (options.color && options.color.xtics) || 'white';
+  var xlabel = (options.color && options.color.xlabel) || 'white';
+  var ylabel = (options.color && options.color.ylabel) || 'white';
+  var title = (options.color && options.color.title) || 'white';
+  var grid = (options.color && options.color.grid) || 'white';
+  var key = (options.color && options.color.key) || 'white';
   if (options.format === 'svg') { /* Setup gnuplot for SVG */
     gnuplot.stdin.write('set term svg fname \"Verdana\" fsize 11\n');
   } else if (options.format == 'pdf') {
@@ -92,32 +101,36 @@ function setup_gnuplot(gnuplot, options) {
     gnuplot.stdin.write('set term postscript landscape enhanced color dashed' +
 			'\"Helvetica\" 14\n');
   } else { /* Setup gnuplot for png */
-    gnuplot.stdin.write('set term png font Verdana 14 size 1280,1024\n');
+    gnuplot.stdin.write('set term png background rgb "' + bg + '" font Verdana 14 size 1280,1024\n');
   }
 
   /* Formatting Options */
   if (options.time) {
-    gnuplot.stdin.write('set xdata time\n');
+    gnuplot.stdin.write('set xdata time \n');
     gnuplot.stdin.write('set timefmt "%s"\n');
+    gnuplot.stdin.write('set border lc rgb "' + border + '"\n');
+    gnuplot.stdin.write('set ytics textcolor rgb "' + ytics + '"\n');
+    gnuplot.stdin.write('set xtics textcolor rgb "' + xtics + '"\n');
+    gnuplot.stdin.write('set key textcolor rgb "' + key + '"\n');
     gnuplot.stdin.write('set format x "' + time_format(options.time) + '"\n');
-    gnuplot.stdin.write('set xlabel "time"\n');
+    gnuplot.stdin.write('set xlabel "time" textcolor rgb "' + xlabel + '"\n');
   }
   if (options.title) {
-    gnuplot.stdin.write('set title "'+options.title+'"\n');
+    gnuplot.stdin.write('set title "'+options.title+'" textcolor rgb "' + title + '" \n');
   }
   if (options.logscale) {
     gnuplot.stdin.write('set logscale y\n');
   }
   if (options.xlabel) {
-    gnuplot.stdin.write('set xlabel "'+options.xlabel+'"\n');
+    gnuplot.stdin.write('set xlabel "'+options.xlabel+'" textcolor rgb "' + xlabel + '" \n');
   }
   if (options.ylabel) {
-    gnuplot.stdin.write('set ylabel "'+options.ylabel+'"\n');
+    gnuplot.stdin.write('set ylabel "'+options.ylabel+'" textcolor rgb "' + ylabel + '" \n');
   }
 
   /* Setup ticks */
-  gnuplot.stdin.write('set grid xtics ytics mxtics\n');
-  gnuplot.stdin.write('set mxtics\n');
+  gnuplot.stdin.write('set grid xtics ytics mxtics mytics ls 12 lc "' + grid + '", ls 13 lc "' + grid + '" \n');
+  gnuplot.stdin.write('set  mxtics\n');
 
   if (options.nokey) {
     gnuplot.stdin.write('set nokey\n');
