@@ -64,10 +64,10 @@ function apply_moving_filter(set, filter, n) {
 /**
  * Returns the string to give to gnuplot based on the value of options.time.
  */
-function time_format(options) {
-  if (_.isString(options.time)) {
+function time_format(time) {
+  if (_.isString(time)) {
     /* Translate the string we've been given into a format */
-    switch(options.time) {
+    switch(time) {
     case 'days':
     case 'Days':
       return "%d/%m";
@@ -75,7 +75,7 @@ function time_format(options) {
     case 'Hours':
       return "%H:%M";
     default: /* Presume we've been given a gnuplot-readable time format string */
-      return options.time;
+      return time;
     }
   } else { /* Just default to hours */
     return "%H:%M";
