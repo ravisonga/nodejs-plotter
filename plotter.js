@@ -62,7 +62,8 @@ function apply_moving_filter(set, filter, n) {
   return set;
 }
 /**
- * Returns the string to give to gnuplot based on the value of options.time.
+ * Returns the string to give to gnuplot based on the value of 
+ time.
  */
 function time_format(time) {
   if (_.isString(time)) {
@@ -127,6 +128,9 @@ function setup_gnuplot(gnuplot, options) {
   if (options.ylabel) {
     gnuplot.stdin.write('set ylabel "'+options.ylabel+'" textcolor rgb "' + ylabel + '" \n');
   }
+  if (options.yFormat) {
+    gnuplot.stdin.write(`set format y '${options.yFormat}'\n`);
+  }	
 
   /* Setup ticks */
   gnuplot.stdin.write('set grid xtics ytics mxtics mytics ls 12 lc "' + grid + '", ls 13 lc "' + grid + '" \n');
