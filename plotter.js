@@ -105,6 +105,14 @@ function setup_gnuplot(gnuplot, options) {
     gnuplot.stdin.write('set term png background rgb "' + bg + '" font Verdana 14 size 1280,1024\n');
   }
 
+   /* Data range config */
+   if (options.xRange) {
+     gnuplot.stdin.write(`set xrange ['${options.xRange.min}':'${options.xRange.max}']\n`);
+   }
+   if (options.yRange) {
+     gnuplot.stdin.write(`set yrange ['${options.yRange.min}':'${options.yRange.max}']\n`);
+   }	
+	
   /* Formatting Options */
   if (options.time) {
     gnuplot.stdin.write('set xdata time \n');
